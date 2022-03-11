@@ -1,0 +1,28 @@
+{
+  "name": "chat-socket-server",
+  "version": "1.0.0",
+  "description": "dovb`s socket server",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon --exec node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gtoyoung/chat-socket-server.git"
+  },
+  "author": "dovb",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gtoyoung/chat-socket-server/issues"
+  },
+  "homepage": "https://github.com/gtoyoung/chat-socket-server#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "nodemon": "^2.0.15",
+    "socket.io": "^4.4.1"
+  }
+}
