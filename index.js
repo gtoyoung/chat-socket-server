@@ -9,6 +9,7 @@ const corsOptions = {
 const socketIo = require("socket.io")(server, {
   cors: {
     origin: process.env.TARGET_URL,
+    methods: ["GET", "POST"], // 접근 허용 방식
   },
 });
 
