@@ -4,8 +4,9 @@ const server = require("http").createServer(app);
 // const cors = require("cors");
 require("dotenv").config();
 const corsOptions = {
-  origin: "*",
+  origin: process.env.TARGET_URL,
 };
+
 const socketIo = require("socket.io")(server, {
   cors: {
     origin: process.env.TARGET_URL,
@@ -14,6 +15,9 @@ const socketIo = require("socket.io")(server, {
     credentials: true,
   },
 });
+
+app.use(cors(corsOptions));
+app.use(express.json({ extended: true }));
 
 const socket = require("./src/socket");
 
