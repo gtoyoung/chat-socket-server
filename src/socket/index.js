@@ -3,6 +3,7 @@ const SOCKET_EVENT = {
   SEND_MESSAGE: "SEND_MESSAGE",
   RECEIVE_MESSAGE: "RECEIVE_MESSAGE",
   LEAVE_ROOM: "LEAVE_ROOM",
+  TYPING_MESSAGE: "TYPING_MESSAGE",
 };
 
 module.exports = function (socketIo) {
@@ -29,6 +30,10 @@ module.exports = function (socketIo) {
           socketIo
             .to(requestData.roomId)
             .emit(SOCKET_EVENT.LEAVE_ROOM, responseData);
+        } else if (type === SOCKET_EVENT.TYPING_MESSAGE) {
+          socketIo
+            .to(requestData.roomId)
+            .emit(SOCKET_EVENT.TYPING_MESSAGE, responseData);
         } else {
           socketIo
             .to(requestData.roomId)

@@ -28,7 +28,7 @@ app.get("/", function (req, res) {
   res.send("WELL COME! DOVB`s SOCKET SERVER");
 });
 
-const port = process.env.PORT || 80;
+const port = process.env.PORT || 5000;
 
 server.listen(port, () => {
   console.log(`server is running on port ${port}`);
