@@ -1,15 +1,15 @@
 const express = require("express");
 const app = express();
 const server = require("http").createServer(app);
-// const cors = require("cors");
-require("dotenv").config();
-const corsOptions = {
-  origin: process.env.TARGET_URL,
-};
+const cors = require("cors");
+// require("dotenv").config();
+// const corsOptions = {
+//   origin: "*",
+// };
 
 const socketIo = require("socket.io")(server, {
   cors: {
-    origin: process.env.TARGET_URL,
+    origin: "*",
     methods: ["GET", "POST"],
     allowedHeaders: ["*"],
     credentials: true,
@@ -17,19 +17,18 @@ const socketIo = require("socket.io")(server, {
   transports: ["websocket"],
 });
 
-app.use(cors(corsOptions));
-app.use(express.json({ extended: true }));
+app.use(cors({}));
 
 const socket = require("./src/socket");
+
+socket(socketIo);
 
 app.get("/", function (req, res) {
   res.send("WELL COME! DOVB`s SOCKET SERVER");
 });
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 80;
 
 server.listen(port, () => {
   console.log(`server is running on port ${port}`);
-
-  socket(socketIo);
 });
