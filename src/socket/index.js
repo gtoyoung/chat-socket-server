@@ -2,12 +2,12 @@ const SOCKET_EVENT = {
   JOIN_ROOM: "JOIN_ROOM",
   SEND_MESSAGE: "SEND_MESSAGE",
   RECEIVE_MESSAGE: "RECEIVE_MESSAGE",
+  LEAVE_ROOM: "LEAVE_ROOM",
 };
 
 module.exports = function (socketIo) {
   socketIo.on("connection", function (socket) {
     console.log("socket connection succeeded.");
-    const roomName = "room 1"; // 편의상 모든 유저는 같은 방을 사용
 
     Object.keys(SOCKET_EVENT).forEach((typeKey) => {
       const type = SOCKET_EVENT[typeKey];
@@ -16,7 +16,7 @@ module.exports = function (socketIo) {
         const firstVisit = type === SOCKET_EVENT.JOIN_ROOM;
 
         if (firstVisit) {
-          socket.join(roomName);
+          socket.join(requestData.roomId);
         }
 
         const responseData = {
@@ -24,7 +24,16 @@ module.exports = function (socketIo) {
           type,
           time: new Date(),
         };
-        socketIo.to(roomName).emit(SOCKET_EVENT.RECEIVE_MESSAGE, responseData);
+
+        if (type === SOCKET_EVENT.LEAVE_ROOM) {
+          socketIo
+            .to(requestData.roomId)
+            .emit(SOCKET_EVENT.LEAVE_ROOM, responseData);
+        } else {
+          socketIo
+            .to(requestData.roomId)
+            .emit(SOCKET_EVENT.RECEIVE_MESSAGE, responseData);
+        }
 
         // 서버는 이벤트를 받은 시각과 함께 데이터를 그대로 중계해주는 역할만 수행
         // 프론트엔드에서 출력 메시지 값 등을 관리
