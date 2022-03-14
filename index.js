@@ -14,6 +14,7 @@ const socketIo = require("socket.io")(server, {
     allowedHeaders: ["*"],
     credentials: true,
   },
+  transports: ["websocket"],
 });
 
 app.use(cors(corsOptions));
