@@ -7,9 +7,10 @@ const cors = require("cors");
 //   origin: "*",
 // };
 
+// 중요: 웹소켓을 위한 설정이라고 명시를 해주어야한다.
 const socketIo = require("socket.io")(server, {
   cors: {
-    origin: "*",
+    origin: process.env.TARGET_URL,
     methods: ["GET", "POST"],
     allowedHeaders: ["*"],
     credentials: true,
