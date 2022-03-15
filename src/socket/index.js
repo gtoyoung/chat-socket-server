@@ -15,15 +15,25 @@ module.exports = function (socketIo) {
 
       socket.on(type, (requestData) => {
         const firstVisit = type === SOCKET_EVENT.JOIN_ROOM;
-
+        const leaveRoom = type === SOCKET_EVENT.LEAVE_ROOM;
         if (firstVisit) {
           socket.join(requestData.roomId);
         }
+
+        if (leaveRoom) {
+          socket.leave(requestData.roomId);
+        }
+
+        // 현재 접속한 사용자 수
+        var connectedClients = socket.adapter.rooms.get(
+          requestData.roomId
+        )?.size;
 
         const responseData = {
           ...requestData,
           type,
           time: new Date(),
+          connectedClients,
         };
 
         if (type === SOCKET_EVENT.LEAVE_ROOM) {
