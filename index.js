@@ -106,6 +106,7 @@ wsServer.on("connection", (socket) => {
     wsServer.sockets.to(requestData.roomId).emit(type, responseData);
   });
 
+  // 메시지 전달
   socket.on(SOCKET_EVENT.SEND_MESSAGE, (requestData) => {
     var type = SOCKET_EVENT.SEND_MESSAGE;
 
