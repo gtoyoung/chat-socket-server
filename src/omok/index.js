@@ -11,6 +11,7 @@ const OMOK_EVENT = {
   PLAYER_SELECTED: "player_selected",
   PLAYER_READY: "player_ready",
   MESSAGE: "message",
+  SEND_MESSAGE: "send_message",
 };
 
 export const OmokSocket = function (socket, server) {
@@ -283,6 +284,11 @@ export const OmokSocket = function (socket, server) {
   });
 
   socket.on(OMOK_EVENT.PLAYER_READY, () => {});
+
+  socket.on(OMOK_EVENT.SEND_MESSAGE, (message) => {
+    const name = getJoinedRoomName(socket);
+    server.in(name).emit(OMOK_EVENT.SEND_MESSAGE, `${socket.id} : ${message}`);
+  });
 
   socket.on("disconnection", () => {
     console.log(`Socket ${socket.id} is disconnectiong.`);
